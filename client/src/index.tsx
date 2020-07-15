@@ -4,7 +4,11 @@ import { App } from './App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <div className="wrapper">
+      <div className="content">
+        <App />
+      </div>
+    </div>
   </React.StrictMode>,
   document.getElementById('root')
 );
