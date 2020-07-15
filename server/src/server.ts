@@ -17,6 +17,12 @@ const connectDb = async () => {
 connectDb();
 const app: Application = express();
 
+
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use('/api/todos', todos);
+
 app.post('/test', async (req, res) => {
     const data = await req.body;
     console.log(data);
@@ -27,7 +33,4 @@ app.get('/test', async (req, res) => {
     res.send('ALL GOOD');
 });
 
-app.use('/api/todos', todos);
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
 app.listen(5000, () => console.log('server is listening on port 5000'));
