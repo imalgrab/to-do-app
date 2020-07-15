@@ -32,6 +32,10 @@ ul {
   justify-content: center;  
 }
 
+.collection-item label:hover{
+  font-weight: 500;
+}
+
 .collection-item i {
   float: right;
   color: lightcoral;
@@ -40,6 +44,7 @@ ul {
 .completed {
   text-decoration: line-through;
   color: lightgray;
+  font-weight: 300;
 }
 
 .todo-form {
@@ -61,4 +66,8 @@ ul {
 }
 .filter-wrapper span {
   float: right;
+}
+
+.btn-flat:hover {
+  background-color: lightslategrey;
 }

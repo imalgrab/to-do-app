@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import bodyParser from "body-parser";
 import { router as todos } from './routes/todos';
 
+
+mongoose.set('useFindAndModify', false);
 const uri = 'mongodb://localhost:27017/tododb';
 
 const connectDb = async () => {
@@ -22,15 +24,5 @@ const app: Application = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/api/todos', todos);
-
-app.post('/test', async (req, res) => {
-    const data = await req.body;
-    console.log(data);
-    res.json(data);
-});
-
-app.get('/test', async (req, res) => {
-    res.send('ALL GOOD');
-});
 
 app.listen(5000, () => console.log('server is listening on port 5000'));

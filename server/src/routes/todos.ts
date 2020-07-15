@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getTodos, addTodo, removeTodo } from '../controllers/todosController';
+import { getTodos, addTodo, removeTodo, toggleChecked, editTodo } from '../controllers/todosController';
 export const router: Router = Router();
 
 router.route('/')
@@ -8,3 +8,7 @@ router.route('/')
 
 router.route('/:id')
     .delete(removeTodo)
+    .put(toggleChecked)
+    
+router.route('/:id/:newVal')
+    .put(editTodo)

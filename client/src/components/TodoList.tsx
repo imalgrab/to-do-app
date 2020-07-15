@@ -4,15 +4,15 @@ import { Todo } from '../App';
 
 interface Props {
     todos: Todo[],
-    toggleChecked: (id: number) => void;
-    editTodo: (id: number, newVal: string) => void;
-    deleteTodo: (id: number) => void;
+    toggleChecked: (id: string) => void;
+    editTodo: (id: string, newVal: string) => void;
+    deleteTodo: (id: string) => void;
 };
 
 export const TodoList: React.FC<Props> = ({ todos, toggleChecked, editTodo, deleteTodo }) => {
     const todoList = todos.map((todo: Todo) =>
         <TodoItem
-            key={todo.id}
+            key={todo._id}
             todo={todo}
             toggleChecked={toggleChecked}
             editTodo={editTodo}

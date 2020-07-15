@@ -21,7 +21,7 @@ export const TodoFilter: React.FC<Props> = ({ filterTodos, numOfDone, numOfTodos
     const buttons = [ALL, PENDING, DONE].map((state, i) =>
         <button
             key={i}
-            className="btn-flat"
+            className="waves-effect waves-light btn-flat"
             onClick={() => { filterTodos(state); setBtnActive(state); }}>{state}</button>)
     return (
         <div className="filter-wrapper">

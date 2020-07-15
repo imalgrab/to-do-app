@@ -4,10 +4,7 @@ import { Todo } from '../models/Todo';
 export const getTodos = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const todos = await Todo.find();
-        return res.status(200).json({
-            count: todos.length,
-            data: todos
-        });
+        return res.send(todos);
     } catch (error) {
         return res.status(500).json({
             error: 'Server error'
@@ -17,10 +14,9 @@ export const getTodos = async (req: Request, res: Response, next: NextFunction) 
 
 export const addTodo = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const todo = await Todo.create(req.body);
+        await Todo.create(req.body);
         return res.status(201).json({
-            success: true,
-            data: todo
+            success: true
         })
     } catch (error) {
         if (error.name === 'ValidationError') {
@@ -35,6 +31,45 @@ export const addTodo = async (req: Request, res: Response, next: NextFunction) =
                 error: 'Server error'
             })
         }
+    }
+}
+
+export const editTodo = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({
+                error: 'no todo with such id'
+            });
+        }
+        await Todo.findOneAndUpdate({ _id: req.params.id }, { text: req.body.text });
+        return res.status(201).json({
+            success: true
+        });
+    } catch (error) {
+        return res.status(500).json({
+            error: 'Server error'
+        })
+    }
+}
+
+export const toggleChecked = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({
+                error: 'no todo with such id'
+            });
+        }
+        const newStatus = !todo.get('completed');
+        await Todo.findOneAndUpdate({ _id: req.params.id }, { completed: newStatus });
+        return res.status(201).json({
+            success: true
+        });
+    } catch (error) {
+        return res.status(500).json({
+            error: 'Server error'
+        })
     }
 }
 

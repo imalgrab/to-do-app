@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ALL, SEARCH, PENDING, DONE } from './constants';
 import { TodoInfo } from './components/TodoInfo';
 import { TodoList } from './components/TodoList';
@@ -6,7 +6,7 @@ import { TodoForm } from './components/TodoForm';
 import { TodoFilter } from './components/TodoFilter';
 
 export type Todo = {
-  id: number;
+  _id: string;
   text: string;
   completed: boolean;
 };
@@ -17,32 +17,36 @@ export const App: React.FC = () => {
   const [isFilter, setFilter] = useState(false);
   const [status, setStatus] = useState(ALL);
 
-  const handleInsert = (todo: Todo) => {
-    setTodos([...todos, todo]);
-    setStatus(ALL);
+  useEffect(() => {
+    fetch('/api/todos')
+      .then(response => response.json())
+      .then(data => setTodos(data));
+  });
+
+  const handleInsert = async (text: string) => {
+    await fetch('/api/todos', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text })
+    })
   }
-  const handleCheck = (id: number) => {
-    const newTodos = [...todos];
-    console.log(newTodos);
-    newTodos.forEach(todo => {
-      if (todo.id === id) {
-        todo.completed = !todo.completed;
-      }
+  const handleCheck = async (id: string) => {
+    await fetch(`/api/todos/${id}`, {
+      method: 'put',
+    })
+
+  }
+  const handleEdit = async (id: string, newVal: string) => {
+    await fetch(`api/todos/${id}/${newVal}`, {
+      method: 'put',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: newVal })
     });
-    setTodos(newTodos);
   }
-  const handleEdit = (id: number, newVal: string) => {
-    const newTodos = [...todos];
-    newTodos.forEach(todo => {
-      if (todo.id === id) {
-        todo.text = newVal;
-      }
-    });
-    setTodos(newTodos);
-  }
-  const handleDelete = (id: number) => {
-    const newTodos = todos.filter(todo => todo.id !== id);
-    setTodos(newTodos);
+  const handleDelete = async (id: string) => {
+    await fetch(`/api/todos/${id}`, {
+      method: 'delete',
+    })
   }
   const handleSearch = (text: string) => {
     const searchFrom = isFilter ? [...specificTodos] : [...todos];
@@ -97,7 +101,6 @@ export const App: React.FC = () => {
         deleteTodo={handleDelete}
       />
       <TodoForm
-        currId={todos.length === 0 ? 0 : todos[todos.length - 1].id + 1}
         addTodo={handleInsert}
         searchTodo={handleSearch} />
       <TodoFilter

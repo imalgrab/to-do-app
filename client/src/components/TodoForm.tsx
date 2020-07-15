@@ -1,13 +1,11 @@
 import React, { useState, ChangeEvent, FormEvent, MouseEvent } from 'react'
-import { Todo } from '../App';
 
 interface Props {
-    currId: number;
-    addTodo: (todo: Todo) => void;
+    addTodo: (text: string) => void;
     searchTodo: (text: string) => void;
 }
 
-export const TodoForm: React.FC<Props> = ({ currId, addTodo, searchTodo }) => {
+export const TodoForm: React.FC<Props> = ({ addTodo, searchTodo }) => {
     const [textVal, setTextVal] = useState('');
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -16,11 +14,7 @@ export const TodoForm: React.FC<Props> = ({ currId, addTodo, searchTodo }) => {
     const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (textVal !== '') {
-            const todo = {
-                id: currId,
-                text: textVal,
-                completed: false,
-            }
+            const todo = textVal;
             addTodo(todo);
             setTextVal('');
         }
@@ -28,11 +22,7 @@ export const TodoForm: React.FC<Props> = ({ currId, addTodo, searchTodo }) => {
     const handleSubmitKey = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (textVal !== '') {
-            const todo = {
-                id: currId,
-                text: textVal,
-                completed: false,
-            }
+            const todo = textVal;
             addTodo(todo);
             setTextVal('');
         }
