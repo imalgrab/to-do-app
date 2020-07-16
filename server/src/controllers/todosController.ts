@@ -81,7 +81,6 @@ export const removeTodo = async (req: Request, res: Response, next: NextFunction
             });
         }
         await todo.remove();
-
         return res.status(200).json({
             removed: todo
         })
