@@ -12,8 +12,8 @@ export type Todo = {
 };
 
 export const App: React.FC = () => {
-  const [todos, setTodos] = useState(Array<Todo>(0));
-  const [specificTodos, setSpecificTodos] = useState(Array<Todo>(0));
+  const [todos, setTodos] = useState(Array<Todo>());
+  const [specificTodos, setSpecificTodos] = useState(Array<Todo>());
   const [isFilter, setFilter] = useState(false);
   const [status, setStatus] = useState(ALL);
 
@@ -63,13 +63,13 @@ export const App: React.FC = () => {
       case PENDING:
         setFilter(true);
         setStatus(PENDING);
-        const pendingTodos = todos.filter(todo => todo.completed === false);
+        const pendingTodos = todos.filter(todo => !todo.completed);
         setSpecificTodos(pendingTodos);
         break;
       case DONE:
         setFilter(true);
         setStatus(DONE);
-        const doneTodos = todos.filter(todo => todo.completed === true);
+        const doneTodos = todos.filter(todo => todo.completed);
         setSpecificTodos(doneTodos);
         break;
       default:
@@ -79,10 +79,10 @@ export const App: React.FC = () => {
   let currTodos = [...todos];
   switch (status) {
     case PENDING:
-      currTodos = todos.filter(todo => todo.completed === false);
+      currTodos = todos.filter(todo => !todo.completed);
       break;
     case DONE:
-      currTodos = todos.filter(todo => todo.completed === true);
+      currTodos = todos.filter(todo => todo.completed);
       break;
     case SEARCH:
       currTodos = [...specificTodos];

@@ -26,11 +26,10 @@ export const addTodo = async (req: Request, res: Response, next: NextFunction) =
                     path: error.errors.text.properties.path
                 }
             })
-        } else {
-            return res.status(500).json({
-                error: 'Server error'
-            })
         }
+        return res.status(500).json({
+            error: 'Server error'
+        })
     }
 }
 
