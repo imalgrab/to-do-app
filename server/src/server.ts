@@ -1,6 +1,5 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
-import bodyParser from "body-parser";
 import { router as todos } from './routes/todos';
 
 
@@ -19,10 +18,7 @@ const connectDb = async () => {
 connectDb();
 const app: Application = express();
 
-
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
 app.use('/api/todos', todos);
 
 app.listen(5000, () => console.log('server is listening on port 5000'));
