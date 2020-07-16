@@ -63,17 +63,17 @@ export const TodoItem: React.FC<Props> = ({ todo, toggleChecked, editTodo, delet
             />
         </li> :
         <li className="collection-item"
-            onMouseEnter={() => setDeleteMode(true)}
+            onMouseOver={() => setDeleteMode(true)}
             onMouseLeave={() => setDeleteMode(false)}>
             <label onDoubleClick={handleTodoEdit}>
                 <input
-                    id={todo._id}
-                    type="checkbox" checked={todo.completed}
-                    onChange={handleCheckboxClick} />
-                <span className={className}>{todo.text}</span>
+                id={todo._id}
+                type="checkbox" checked={todo.completed}
+                onChange={handleCheckboxClick} />
+            <span className={className}>{todo.text}</span>
             </label>
-            {innerBtn}
-        </li>
+    { innerBtn }
+        </li >
 
     return todoItem;
 }

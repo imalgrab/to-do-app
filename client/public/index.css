@@ -26,10 +26,11 @@ ul {
   border: none
 }
 .collection-item label {
-  display: inline;
+  display: inline-block;
   flex-wrap: wrap;
   align-content: center;  
   justify-content: center;  
+  width: calc(100% - 45px);
 }
 
 .collection-item label:hover{
